@@ -94,12 +94,15 @@ export default function Game() {
       .flatMap(g => g.words));
 
     if (Array.from(allWords).every(word => submittedWords.has(word))) {
-      const score = Math.round((submittedGroups.filter(g => g.isCorrect).length /
-        (submittedGroups.length + 1)) * 100);
+      // Calculate final score based on all submitted groups
+      const allSubmittedGroups = [...submittedGroups, newGroup];
+      const score = Math.round(
+        (allSubmittedGroups.filter(g => g.isCorrect).length / allSubmittedGroups.length) * 100
+      );
 
       createGameMutation.mutate({
         wordSetId: Number(id),
-        submittedGroups: [...submittedGroups, newGroup],
+        submittedGroups: allSubmittedGroups,
         score,
         completed: true,
       });
