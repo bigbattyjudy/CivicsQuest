@@ -48,7 +48,7 @@ export default function Home() {
                   <div className="flex items-center gap-2">
                     <Trophy className="h-4 w-4 text-primary" />
                     <span className="text-sm">
-                      {wordSet.categories.length} Categories
+                      {wordSet.wordGroups.length} Word Groups
                     </span>
                   </div>
                   <Link href={`/game/${wordSet.id}`}>

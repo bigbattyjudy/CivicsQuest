@@ -6,14 +6,21 @@ export const wordSets = pgTable("word_sets", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
   difficulty: text("difficulty").notNull(),
-  categories: jsonb("categories").$type<string[]>().notNull(),
-  words: jsonb("words").$type<{word: string, category: string}[]>().notNull()
+  wordGroups: jsonb("word_groups").$type<{
+    words: string[],
+    explanation: string
+  }[]>().notNull(),
+  definitions: jsonb("definitions").$type<Record<string, string>>().notNull()
 });
 
 export const gameState = pgTable("game_states", {
   id: serial("id").primaryKey(),
   wordSetId: integer("word_set_id").notNull(),
-  selectedWords: jsonb("selected_words").$type<{word: string, category: string}[]>().notNull(),
+  submittedGroups: jsonb("submitted_groups").$type<{
+    words: string[],
+    isCorrect: boolean,
+    explanation?: string
+  }[]>().notNull(),
   score: integer("score").notNull(),
   completed: boolean("completed").notNull()
 });

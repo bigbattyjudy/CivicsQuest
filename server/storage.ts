@@ -20,40 +20,40 @@ export class MemStorage implements IStorage {
     this.gameStates = new Map();
     this.currentWordSetId = 1;
     this.currentGameStateId = 1;
-    
+
     // Initialize with sample word sets
     const civicsWordSets: InsertWordSet[] = [
       {
         name: "Branches of Government",
         difficulty: "easy",
-        categories: ["Executive", "Legislative", "Judicial"],
-        words: [
-          { word: "President", category: "Executive" },
-          { word: "Congress", category: "Legislative" },
-          { word: "Supreme Court", category: "Judicial" },
-          { word: "Vice President", category: "Executive" },
-          { word: "Senate", category: "Legislative" },
-          { word: "Federal Judge", category: "Judicial" },
-          { word: "Cabinet", category: "Executive" },
-          { word: "House", category: "Legislative" },
-          { word: "Chief Justice", category: "Judicial" }
-        ]
-      },
-      {
-        name: "Constitutional Rights",
-        difficulty: "medium",
-        categories: ["Individual Rights", "Political Rights", "Legal Rights"],
-        words: [
-          { word: "Free Speech", category: "Individual Rights" },
-          { word: "Voting", category: "Political Rights" },
-          { word: "Fair Trial", category: "Legal Rights" },
-          { word: "Religion", category: "Individual Rights" },
-          { word: "Assembly", category: "Political Rights" },
-          { word: "Due Process", category: "Legal Rights" },
-          { word: "Press", category: "Individual Rights" },
-          { word: "Petition", category: "Political Rights" },
-          { word: "Counsel", category: "Legal Rights" }
-        ]
+        wordGroups: [
+          {
+            words: ["President", "Vice President", "Cabinet", "Executive Orders"],
+            explanation: "These all relate to the Executive Branch, which is responsible for implementing and enforcing federal laws."
+          },
+          {
+            words: ["Senate", "House", "Congress", "Legislature"],
+            explanation: "These make up the Legislative Branch, which is responsible for making laws."
+          },
+          {
+            words: ["Supreme Court", "Federal Judge", "Chief Justice", "Judicial Review"],
+            explanation: "These are part of the Judicial Branch, which interprets laws and determines if they are constitutional."
+          }
+        ],
+        definitions: {
+          "President": "Head of the Executive Branch and Commander in Chief",
+          "Vice President": "Second in command of the Executive Branch, President of the Senate",
+          "Cabinet": "Advisory body to the President, heads of federal departments",
+          "Executive Orders": "Official directives from the President to federal agencies",
+          "Senate": "Upper chamber of Congress, two senators per state",
+          "House": "Lower chamber of Congress, representatives based on state population",
+          "Congress": "Legislative body of the federal government",
+          "Legislature": "Branch of government that makes laws",
+          "Supreme Court": "Highest court in the federal judiciary",
+          "Federal Judge": "Appointed judicial officer who resolves disputes",
+          "Chief Justice": "Head of the Supreme Court and federal judiciary",
+          "Judicial Review": "Power to determine if laws are constitutional"
+        }
       }
     ];
 
@@ -70,7 +70,7 @@ export class MemStorage implements IStorage {
 
   async createWordSet(wordSet: InsertWordSet): Promise<WordSet> {
     const id = this.currentWordSetId++;
-    const newWordSet = { ...wordSet, id };
+    const newWordSet = { id, ...wordSet };
     this.wordSets.set(id, newWordSet);
     return newWordSet;
   }
@@ -81,7 +81,7 @@ export class MemStorage implements IStorage {
 
   async createGameState(gameState: InsertGameState): Promise<GameState> {
     const id = this.currentGameStateId++;
-    const newGameState = { ...gameState, id };
+    const newGameState = { id, ...gameState };
     this.gameStates.set(id, newGameState);
     return newGameState;
   }
