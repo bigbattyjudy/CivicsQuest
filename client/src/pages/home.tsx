@@ -19,7 +19,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-background p-8">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white p-8">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
@@ -32,7 +32,10 @@ export default function Home() {
 
         <div className="grid gap-6 md:grid-cols-2">
           {wordSets?.map((wordSet) => (
-            <Card key={wordSet.id} className="hover:shadow-lg transition-shadow">
+            <Card 
+              key={wordSet.id} 
+              className="hover:shadow-lg transition-all hover:-translate-y-0.5 border-blue-100/50"
+            >
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <BookOpen className="h-5 w-5" />
@@ -52,7 +55,7 @@ export default function Home() {
                     </span>
                   </div>
                   <Link href={`/game/${wordSet.id}`}>
-                    <Button>Play Now</Button>
+                    <Button className="hover:bg-primary/90 transition-colors">Play Now</Button>
                   </Link>
                 </div>
               </CardContent>

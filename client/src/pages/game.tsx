@@ -149,7 +149,7 @@ export default function Game() {
     ? Math.round((submittedGroups.filter(g => g.isCorrect).length / submittedGroups.length) * 100)
     : 0;
 
-  const remainingWords = shuffledWords.filter(word => 
+  const remainingWords = shuffledWords.filter(word =>
     !submittedGroups
       .filter(g => g.isCorrect)
       .flatMap(g => g.words)
@@ -157,13 +157,13 @@ export default function Game() {
   );
 
   return (
-    <div className="min-h-screen bg-background p-8">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white p-8">
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <Button
             variant="ghost"
             onClick={() => setLocation("/")}
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 hover:bg-blue-50/80 transition-colors"
           >
             <Home className="h-4 w-4" />
             Home
@@ -176,7 +176,7 @@ export default function Game() {
             <Button
               variant="outline"
               onClick={handleReset}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 hover:bg-blue-50/80 transition-colors"
             >
               <RefreshCcw className="h-4 w-4" />
               Reset
@@ -187,13 +187,13 @@ export default function Game() {
         <div className="space-y-8">
           <div>
             <h2 className="text-lg font-semibold mb-4">Selected Words ({selectedWords.length}/4)</h2>
-            <div className="flex flex-wrap gap-2 min-h-[60px] p-4 bg-muted rounded-lg">
+            <div className="flex flex-wrap gap-2 min-h-[60px] p-4 bg-blue-50/50 rounded-lg border border-blue-100">
               {selectedWords.map((word) => (
                 <Button
                   key={word}
                   variant="secondary"
                   onClick={() => handleWordSelect(word)}
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-2 hover:bg-blue-100/50 transition-colors"
                 >
                   {word}
                   <X className="h-4 w-4" />
@@ -201,7 +201,7 @@ export default function Game() {
               ))}
             </div>
             <Button
-              className="w-full mt-4"
+              className="w-full mt-4 hover:bg-primary/90 transition-colors"
               disabled={selectedWords.length !== 4}
               onClick={handleSubmit}
             >
@@ -219,13 +219,13 @@ export default function Game() {
                       <Card
                         className={`cursor-pointer transition-all ${
                           selectedWords.includes(word)
-                            ? "border-primary"
-                            : "hover:shadow-md"
+                            ? "border-primary shadow-md"
+                            : "hover:shadow-md hover:-translate-y-0.5 transition-transform"
                         }`}
                         onClick={() => handleWordSelect(word)}
                       >
                         <CardContent className="p-4 text-center flex items-center justify-between">
-                          <span>{word}</span>
+                          <span className="font-medium">{word}</span>
                           <HelpCircle className="h-4 w-4 text-muted-foreground" />
                         </CardContent>
                       </Card>
@@ -246,8 +246,8 @@ export default function Game() {
                 {submittedGroups.map((group, index) => (
                   <Card
                     key={index}
-                    className={`${
-                      group.isCorrect ? "bg-green-50" : "bg-red-50"
+                    className={`transition-shadow hover:shadow-md ${
+                      group.isCorrect ? "bg-green-50/80" : "bg-red-50/80"
                     }`}
                   >
                     <CardContent className="p-4">
@@ -261,7 +261,7 @@ export default function Game() {
                           {group.words.map((word) => (
                             <span
                               key={word}
-                              className="px-2 py-1 bg-white rounded-md text-sm"
+                              className="px-2 py-1 bg-white/80 rounded-md text-sm shadow-sm"
                             >
                               {word}
                             </span>
