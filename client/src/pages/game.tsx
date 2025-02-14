@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useParams, useLocation } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
@@ -22,6 +22,16 @@ import {
 import { type WordSet, type GameState } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
 
+// Fisher-Yates shuffle algorithm
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
 export default function Game() {
   const { id } = useParams();
   const [, setLocation] = useLocation();
@@ -36,6 +46,13 @@ export default function Game() {
   const { data: wordSet, isLoading } = useQuery<WordSet>({
     queryKey: [`/api/word-sets/${id}`],
   });
+
+  // Memoize the shuffled words to maintain the same order during re-renders
+  // but shuffle them when the game starts or is reset
+  const shuffledWords = useMemo(() => {
+    if (!wordSet) return [];
+    return shuffleArray(wordSet.wordGroups.flatMap(g => g.words));
+  }, [wordSet]);
 
   const createGameMutation = useMutation({
     mutationFn: async (gameState: Omit<GameState, "id">) => {
@@ -117,6 +134,7 @@ export default function Game() {
   const handleReset = () => {
     setSelectedWords([]);
     setSubmittedGroups([]);
+    // No need to manually reshuffle as changing the key will trigger useMemo
   };
 
   if (isLoading) {
@@ -131,12 +149,12 @@ export default function Game() {
     ? Math.round((submittedGroups.filter(g => g.isCorrect).length / submittedGroups.length) * 100)
     : 0;
 
-  const remainingWords = wordSet?.wordGroups
-    .flatMap(g => g.words)
-    .filter(word => !submittedGroups
+  const remainingWords = shuffledWords.filter(word => 
+    !submittedGroups
       .filter(g => g.isCorrect)
       .flatMap(g => g.words)
-      .includes(word)) ?? [];
+      .includes(word)
+  );
 
   return (
     <div className="min-h-screen bg-background p-8">
