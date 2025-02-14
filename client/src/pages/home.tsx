@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Star, Trophy, ExternalLink } from "lucide-react";
+import { BookOpen, Star, Trophy, ExternalLink, AlertCircle } from "lucide-react";
 import { type WordSet } from "@shared/schema";
 
 export default function Home() {
@@ -102,6 +102,21 @@ export default function Home() {
               <ExternalLink className="h-4 w-4" />
               Rights and Responsibilities of U.S. Citizens - USCIS
             </a>
+          </div>
+
+          <div className="mt-8 p-6 bg-amber-50/50 rounded-lg border border-amber-100">
+            <div className="flex items-start gap-3">
+              <AlertCircle className="h-5 w-5 text-amber-500 mt-1 flex-shrink-0" />
+              <div className="space-y-4">
+                <h3 className="font-semibold text-amber-900">Disclaimer:</h3>
+                <p className="text-sm text-amber-900/90">
+                  Due to current administrative policy changes and ongoing reviews, certain government resources related to U.S. citizenship rights and federal holidays are currently unavailable to the public. These resources, which have been longstanding pillars of civic education, are temporarily inaccessible. We encourage citizens to continue advocating for access to these essential educational materials, which have long been considered vital to understanding civic rights and responsibilities in the United States.
+                </p>
+                <p className="text-sm text-amber-900/90">
+                  While the information for the Branches of Government remains accessible, we urge you to verify it through official channels. Please note that we remain committed to providing accurate and up-to-date information for your civic knowledge and engagement.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
