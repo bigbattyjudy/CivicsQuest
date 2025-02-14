@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Star, Trophy } from "lucide-react";
+import { BookOpen, Star, Trophy, ExternalLink } from "lucide-react";
 import { type WordSet } from "@shared/schema";
 
 export default function Home() {
@@ -30,7 +30,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2 mb-16">
           {wordSets?.map((wordSet) => (
             <Card 
               key={wordSet.id} 
@@ -61,6 +61,48 @@ export default function Home() {
               </CardContent>
             </Card>
           ))}
+        </div>
+
+        <div className="mt-16 pt-8 border-t border-blue-100">
+          <h2 className="text-lg font-semibold mb-4 text-center">Sources</h2>
+          <div className="grid gap-4 text-sm text-muted-foreground">
+            <a 
+              href="https://www.usa.gov" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 hover:text-primary transition-colors"
+            >
+              <ExternalLink className="h-4 w-4" />
+              USA.gov - Official Guide to Government Information and Services
+            </a>
+            <a 
+              href="https://www.usa.gov/branches-of-government" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 hover:text-primary transition-colors"
+            >
+              <ExternalLink className="h-4 w-4" />
+              Branches of Government - USA.gov
+            </a>
+            <a 
+              href="https://www.opm.gov/policy-data-oversight/pay-leave/federal-holidays/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 hover:text-primary transition-colors"
+            >
+              <ExternalLink className="h-4 w-4" />
+              Federal Holidays - Office of Personnel Management
+            </a>
+            <a 
+              href="https://www.uscis.gov/citizenship/learn-about-citizenship/rights-and-responsibilities-of-citizens" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 hover:text-primary transition-colors"
+            >
+              <ExternalLink className="h-4 w-4" />
+              Rights and Responsibilities of U.S. Citizens - USCIS
+            </a>
+          </div>
         </div>
       </div>
     </div>
